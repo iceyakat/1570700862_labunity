@@ -13,4 +13,12 @@ public class Explosion : MonoBehaviour
 				Destroy(this.gameObject);
 		}
 	}
+	void OnCollisionExit(Collision other) 
+	{
+		if (other.gameObject.tag== "Cylinder")
+		{
+			Rigidbody rb = GetComponent<Rigidbody> ();
+			rb.velocity = new Vector3 (0, rb.velocity.y, 0);
+		}
+}
 }
