@@ -4,14 +4,12 @@ using System.Collections;
 public class controller : MonoBehaviour
 {
 	public GameObject hazard;
-	//public Vector3 spawnValues;
 	public float delta = 1.5f;  // Amount to move left and right from the start point
 	public float speed = 2.0f; 
 	private Vector3 startPos;
 
 	void Start ()
 	{
-		//SpawnWaves ();
 		startPos = transform.position;
 	}
 
