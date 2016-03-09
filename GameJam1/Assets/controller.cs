@@ -4,19 +4,20 @@ using System.Collections;
 public class controller : MonoBehaviour
 {
 	public GameObject hazard;
-	public Vector3 spawnValues;
-	public Vector3 spawnrota;
+	//public Vector3 spawnValues;
+	public float delta = 1.5f;  // Amount to move left and right from the start point
+	public float speed = 2.0f; 
+	private Vector3 startPos;
 
 	void Start ()
 	{
-		SpawnWaves ();
+		//SpawnWaves ();
+		startPos = transform.position;
 	}
 
-	void SpawnWaves ()
-	{
-		Vector3 spawnPosition = new Vector3 (spawnValues.y,Random.Range (-spawnValues.x, spawnValues.x), spawnValues.z);
-		//Vector3 spawnRotation= new Vector3 (spawnrota.x,spawnrota.y, spawnrota.z);
-		Quaternion spawnRotation = Quaternion.identity;
-		Instantiate (hazard, spawnPosition, spawnRotation);
-	}
+	void Update () {
+		Vector3 v = startPos;
+		v.x += delta * Mathf.Sin (Time.time * speed);
+		transform.position = v;
+}
 }
