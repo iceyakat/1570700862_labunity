@@ -10,13 +10,8 @@ public class jump : MonoBehaviour
 	{
 		rb = GetComponent<Rigidbody>();
 	}
-	void FixedUpdate()
+	public void jumper()
 	{
-
-		if (Input.GetKey(KeyCode.Space))
-		{
-			rb.AddForce(Vector3.up * speed);
-		}
-
+			rb.velocity = Vector3.up * speed ;
 	}
 }
