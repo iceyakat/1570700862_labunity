@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Controller : MonoBehaviour
 {
 	public GameObject hazard ;
+	public GameObject enemy;
+	public GameObject coin;
 	public float delta = 1.5f;  // Amount to move left and right from the start point
 	public float speed = 2.0f; 
 	//private Vector3 startPos;
@@ -11,29 +14,21 @@ public class Controller : MonoBehaviour
 	public float startWait;
 	public float waveWait;
 	public int hazardCount;
-	private bool gameOver;
-	private bool restart;
-	public GUIText restartText;
-	public GUIText gameOverText;
+	public int enemyCount;
+	public int coinCount;
+	public Button btnGameOver;
+	public Text GameOver;
 	void Start ()
 	{
-		gameOver = false;
-		restart = false;
-		restartText.text = " ";
-		gameOverText.text = " ";
-		StartCoroutine (SpawnWaves ());
-
-	}
-	void Update(){
-		if (restart)
-		{
-			if (Input.GetKeyDown (KeyCode.R))
-			{
-				Application.LoadLevel (Application.loadedLevel);
-			}
 		
+		StartCoroutine (SpawnWaves ());
+		StartCoroutine (SpawnEnemy ());
+		StartCoroutine (SpawnCoin ());
+
+		btnGameOver.gameObject.SetActive (false);
+		GameOver.gameObject.SetActive (false);
 	}
-	}
+		
 
 	IEnumerator SpawnWaves ()
 	{
@@ -41,22 +36,41 @@ public class Controller : MonoBehaviour
 		while (true) {
 			for (int i = 0; i < hazardCount; i++) {
 				//float randomNum = Random.Range (-2.3f,4.5f);
-				GameObject hazard2 = (GameObject)Instantiate (hazard, new Vector3 (2,0, 0), Quaternion.identity);
-				hazard2.transform.Rotate(90,0,0);
+				GameObject hazard2 = (GameObject)Instantiate (hazard, new Vector3 (2, 0, 0), Quaternion.identity);
+				hazard2.transform.Rotate (90, 0, 0);
+				yield return new WaitForSeconds (spawnWait);
+			}
+				yield return new WaitForSeconds (waveWait);
+
+			}
+	}
+	IEnumerator SpawnEnemy ()
+	{
+		yield return new WaitForSeconds (startWait);
+		while (true) {
+			for (int i = 0; i < enemyCount; i++) {
+				float randomNum = Random.Range (4,1.5f);
+				GameObject enemy2 = (GameObject)Instantiate (enemy, new Vector3 (2, randomNum, 0), Quaternion.identity);
+				enemy2.transform.Rotate (90, 0, 0);
 				yield return new WaitForSeconds (spawnWait);
 			}
 			yield return new WaitForSeconds (waveWait);
-			if (gameOver)
-			{
-				restartText.text = "Press 'R' for Restart";
-				restart = true;
-				break;
-			}
+
 		}
 	}
-	public void GameOver ()
+	IEnumerator SpawnCoin ()
 	{
-		gameOverText.text = "Game Over!";
-		gameOver = true;
+		yield return new WaitForSeconds (startWait);
+		while (true) {
+			for (int i = 0; i < coinCount; i++) {
+				float randomNum = Random.Range (-2,3);
+				GameObject coin2 = (GameObject)Instantiate (coin, new Vector3 (randomNum, 2, 0), Quaternion.identity);
+				coin2.transform.Rotate (90, 0, 0);
+				yield return new WaitForSeconds (spawnWait);
+			}
+			yield return new WaitForSeconds (waveWait);
+
+		}
 	}
 }
+	

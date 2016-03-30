@@ -6,6 +6,9 @@ public class Jump : MonoBehaviour
 	public float speed;
 	private Rigidbody rb;  
 	bool canjump;
+	bool canjump2;
+	int jumpcount=0;
+
 
 	void Start ()
 	{
@@ -13,22 +16,26 @@ public class Jump : MonoBehaviour
 	}
 	public void jumper()
 	{
-		if (canjump) {
+		if (canjump || jumpcount<=1) {
 			rb.velocity = Vector3.up * speed;
+			jumpcount++;
 		}
 	}
 	void OnCollisionEnter(Collision other) {
 
-		if (other.gameObject.tag== "cube")
-		{
+		if (other.gameObject.tag == "cube") {
 			canjump = true;
-		}
+			jumpcount = 0;
 
+		}
+ 		
 	}
 	void OnCollisionExit(Collision other) {
 
 		if (other.gameObject.tag == "cube") {
 			canjump = false;
+
 		}
 	}
+
 }
