@@ -49,7 +49,7 @@ public class Controller : MonoBehaviour
 		yield return new WaitForSeconds (startWait);
 		while (true) {
 			for (int i = 0; i < enemyCount; i++) {
-				float randomNum = Random.Range (4,1.5f);
+				float randomNum = Random.Range (4,2);
 				GameObject enemy2 = (GameObject)Instantiate (enemy, new Vector3 (2, randomNum, 0), Quaternion.identity);
 				enemy2.transform.Rotate (90, 0, 0);
 				yield return new WaitForSeconds (spawnWait);
